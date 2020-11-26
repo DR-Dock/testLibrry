@@ -1,0 +1,91 @@
+DROP VIEW IF EXISTS R1;
+DROP VIEW IF EXISTS R2;
+DROP VIEW IF EXISTS R3;
+DROP VIEW IF EXISTS R4;
+
+DROP TABLE IF EXISTS rental;
+DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS authors;
+
+CREATE TABLE authors(
+id_author INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(30) NOT NULL,
+patronymic VARCHAR(30) NOT NULL,
+surname VARCHAR(30) NOT NULL,
+CONSTRAINT K0 PRIMARY KEY(id_author)
+);
+
+
+CREATE TABLE books(
+id_book INT NOT NULL AUTO_INCREMENT,
+book_name VARCHAR(30) NOT NULL,
+publishing_house VARCHAR(30) NOT NULL,
+publishing_year VARCHAR(30) NOT NULL,
+id_author_book INT NOT NULL,
+CONSTRAINT K1 PRIMARY KEY(id_book),
+CONSTRAINT C0 FOREIGN KEY(id_author_book) REFERENCES authors(id_author)
+);
+
+CREATE TABLE students(
+id_student INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(30) NOT NULL,
+patronymic VARCHAR(30) NOT NULL,
+surname VARCHAR(30) NOT NULL,
+CONSTRAINT K2 PRIMARY KEY(id_student)
+);
+
+
+CREATE TABLE rental(
+id_rental INT NOT NULL AUTO_INCREMENT,
+id_student_rental INT NOT NULL,
+id_book_rental INT NOT NULL,
+took_date DATE NOT NULL,
+returned_date DATE,
+CONSTRAINT C1 FOREIGN KEY(id_student_rental) REFERENCES students(id_student),
+CONSTRAINT C2 FOREIGN KEY(id_book_rental) REFERENCES books(id_book),
+CONSTRAINT K3 PRIMARY KEY(id_rental)
+);
+
+
+INSERT INTO authors(name,patronymic,surname) VALUES ('Карлос','Сeсар Сальвадор Аранья','Кастанеда');
+INSERT INTO authors(name,patronymic,surname) VALUES ('Лев','Николаевич','Толстой');
+INSERT INTO authors(name,patronymic,surname) VALUES ('Михаил','Афанасьевич','Булгаков');
+INSERT INTO authors(name,patronymic,surname) VALUES ('Пауло','де Соуза','Коэльо');
+
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Дар орла','София',2005,1);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Дар орла','София',2005,1);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Огонь изнутри','София',2020,1);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Огонь изнутри','София',2020,1);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Огонь изнутри','София',2020,1);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Война и мир, том 1','Азбука',2013,2);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Война и мир, том 2','Азбука',2013,2);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Война и мир, том 3','Азбука',2013,2);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Война и мир, том 4','Азбука',2013,2);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Война и мир, том 1','Азбука',2013,2);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Война и мир, том 2','Азбука',2013,2);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Мастер и Маргарита','Азбука',2020,3);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Мастер и Маргарита','Азбука',2020,3);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Алхимик','АСТ',2015,4);
+INSERT INTO books(book_name,publishing_house,publishing_year,id_author_book) VALUES ('Валькирии','АСТ',2014,4);
+
+INSERT INTO students(name,patronymic,surname) VALUES ('Иван','Иванович','Иванов');
+INSERT INTO students(name,patronymic,surname) VALUES ('Алексей','Алексеевич','Алексеев');
+INSERT INTO students(name,patronymic,surname) VALUES ('Сергей','Сергеевич','Сергеев');
+INSERT INTO students(name,patronymic,surname) VALUES ('Александр','Александрович','Александров');
+
+
+INSERT INTO rental(id_student_rental,id_book_rental,took_date,returned_date) VALUES (1,1,'2020-01-02','2020-01-10');
+INSERT INTO rental(id_student_rental,id_book_rental,took_date,returned_date) VALUES (1,2,'2020-02-02','2020-02-10');
+INSERT INTO rental(id_student_rental,id_book_rental,took_date) VALUES (2,4,'2020-01-02');
+INSERT INTO rental(id_student_rental,id_book_rental,took_date,returned_date) VALUES (2,10,'2020-01-02','2020-10-10');
+INSERT INTO rental(id_student_rental,id_book_rental,took_date,returned_date) VALUES (2,14,'2020-01-02','2020-01-10');
+INSERT INTO rental(id_student_rental,id_book_rental,took_date,returned_date) VALUES (4,7,'2020-01-02','2020-01-10');
+INSERT INTO rental(id_student_rental,id_book_rental,took_date,returned_date) VALUES (3,7,'2020-01-11','2020-01-22');
+
+CREATE OR REPLACE VIEW R1 AS SELECT id_book_rental FROM rental WHERE YEAR(took_date) = 2020;
+CREATE OR REPLACE VIEW R2 AS SELECT id_author_book,book_name FROM books INNER JOIN R1 ON books.id_book = R1.id_book_rental;
+CREATE OR REPLACE VIEW R3 AS SELECT id_author_book, COUNT(*) AS COUNT FROM R2 GROUP BY id_author_book;
+CREATE OR REPLACE VIEW R4 AS SELECT id_author_book, MAX(COUNT) FROM R3;
+SELECT * FROM R4 INNER JOIN authors ON R4.id_author_book = authors.id_author;
+
