@@ -1,0 +1,5 @@
+CREATE OR REPLACE VIEW R1 AS SELECT id_book_rental FROM rental WHERE YEAR(took_date) = 2020;
+CREATE OR REPLACE VIEW R2 AS SELECT id_author_book,book_name FROM books INNER JOIN R1 ON books.id_book = R1.id_book_rental;
+CREATE OR REPLACE VIEW R3 AS SELECT id_author_book, COUNT(*) AS COUNT FROM R2 GROUP BY id_author_book;
+CREATE OR REPLACE VIEW R4 AS SELECT id_author_book, MAX(COUNT) FROM R3;
+SELECT * FROM R4 INNER JOIN authors ON R4.id_author_book = authors.id_author;
