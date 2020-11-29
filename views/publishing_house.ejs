@@ -36,13 +36,14 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">Название книги</th>
-      
+      <th scope="col">Номер книги</th>
     </tr>
   </thead>
   <tbody>
      <% for(var i=0; i<rows.length;i++) {%>
     <tr>
       <th    scope="row"><a class="text-dark" href="/books/<%=rows[i].id_book%>-<%=rows[i].book_name%>"> <%=rows[i].book_name %></a></th>
+      <th    scope="row"> <%=rows[i].id_book %></th>
     </tr>
     <%} %>
   </tbody>
