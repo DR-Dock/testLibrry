@@ -33,6 +33,7 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
+       <th scope="col">Номер книги</th>
       <th scope="col">Название книги</th>
       <th scope="col">ФИО автора</th>
       <th scope="col">Издательство</th>
@@ -44,6 +45,7 @@
   <tbody id="tbody">
       <% for(var i=0; i<rows.length;i++) {%>
     <tr>
+      <th    scope="row"> <%=rows[i].id_book %></th>
       <th    scope="row"><a class="text-dark" href="/books/<%=rows[i].id_book%>-<%=rows[i].book_name%>"> <%=rows[i].book_name %></a></th>
       <td   scope="row"><a class="text-dark" href="/authors/<%=rows[i].id_author%>"><%=rows[i].surname + ' ' + rows[i].name +' ' + rows[i].patronymic %></a></td>
       <td   scope="row"><a class="text-dark" href="/publishing_house/<%=rows[i].publishing_house%>"><%=rows[i].publishing_house %></a></td>

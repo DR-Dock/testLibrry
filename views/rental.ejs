@@ -24,7 +24,7 @@
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">ФИО читателя</th>
+      <th scope="col">ФИО читателя, № билета</th>
       <th scope="col">Название книги</th>
       <th scope="col">Дата выдачи</th>
       <th scope="col">Дата возврата</th>
@@ -35,7 +35,7 @@
       <% for(var i=0; i<rows.length;i++) {%>
     <tr>
       <!-- <th    scope="row"><a class="text-dark" href="/books/<%=i%>"> <%=rows[i].book_name %></a></th> -->
-      <td   scope="row"><a class="text-dark" href="/rentalStud/<%=rows[i].id_student%>"><%=rows[i].surname + ' ' + rows[i].name +' ' + rows[i].patronymic %></a></td>
+      <td   scope="row"><a class="text-dark" href="/rentalStud/<%=rows[i].id_student%>"><%=rows[i].surname + ' ' + rows[i].name +' ' + rows[i].patronymic +', №' + rows[i].id_student %></a></td>
       <!-- <td   scope="row"><%=rows[i].surname + ' ' + rows[i].name +' ' + rows[i].patronymic %></td> -->
       <!-- <td   scope="row"><%=rows[i].book_name %></td> -->
       <td   scope="row"><a class="text-dark" href="/books/<%=rows[i].id_book%>-<%=rows[i].book_name%>"><%=rows[i].book_name %></a></td>

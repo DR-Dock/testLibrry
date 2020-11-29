@@ -11,7 +11,6 @@ initDb().then(main);
 
 
 
-
 function main(){
 	
 app.set("view engine", "ejs");
@@ -45,7 +44,6 @@ const rows = await query('SELECT * FROM retBook INNER JOIN students ON retBook.i
  res.render('returnBook' , {rows: rows,option: 1}) 
 }
 else{
-	console.log('wqe')
 	await query(`UPDATE rental SET returned_date = CURRENT_DATE() WHERE id_book_rental = ${req.params.bookId} AND returned_date IS NULL;`)
 	res.redirect('/')
 }
@@ -146,6 +144,7 @@ const rows = await query(`SELECT * FROM books WHERE publishing_house = "${req.pa
 
 function AngryStud(arr) {
 
+
 	let id_mas = []
   let newarr = arr.map(elem=> [elem.id, elem.num])
   newarr.sort((a,b)=>b[1] - a[1])
@@ -164,9 +163,7 @@ let obj = {}
 				mas.push(newarr[j][1])
 			}
 		}
-		obj[id_mas[i]] = mas.sort(function(a,b){ 
-  return b - a
-})
+		obj[id_mas[i]] = mas
 	}
 	for (key in obj) {
   obj[key] = obj[key].reduce(function(sum, current) {
@@ -201,7 +198,7 @@ const stud = await query(`SELECT * FROM students WHERE id_student = ${AngryStud(
 })
 
 app.get('/authors', async (req, res) => {
-if ('year' in req.query) {
+if ('year' in req.query & req.query.year != '') {
 	await query('DROP VIEW IF EXISTS R4;')
 	await query('DROP VIEW IF EXISTS R3;')
 	await query('DROP VIEW IF EXISTS R2;')
