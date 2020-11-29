@@ -1,6 +1,6 @@
 # test_library
 ### 1. База данных.
-<img src="https://github.com/DR-Dock/test_library/blob/main/%D1%81%D1%85%D0%B5%D0%BC%D0%B0.png" alt="">
+<img src="https://github.com/DR-Dock/test_library/blob/main/images/%D1%81%D1%85%D0%B5%D0%BC%D0%B0.png" alt="">
 
 Authors(авторы) – содержит id, имя, фамилию, отчество.
 
